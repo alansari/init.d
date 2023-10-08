@@ -25,7 +25,7 @@ exec_script_as_default_user
 package_name="Xenia-Canary"
 package_description="Xbox360 Emulator"
 package_icon_url="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/420c841038c492fed4d19999a813009d/32/32x32.png"
-package_executable="${USER_HOME:?}/.local/share/xenia/xenia_canary.exe"
+package_executable="${__emulation_path:?}/storage/xenia/xenia_canary.exe"
 package_category="Game"
 print_package_name
 
@@ -40,7 +40,7 @@ __installed_version=$(catalog -g ${package_name,,})
 
 # Only install if the latest version does not already exist locally
 if ([ ! -f "${package_executable:?}" ] || [ ${__installed_version} != ${__latest_package_version:?} ]); then
-    __install_dir="${USER_HOME:?}/.local/share/xenia"
+    __install_dir="${__emulation_path:?}/storage/xenia"
     # Download zip & extract
     print_step_header "Downloading ${package_name:?} version ${__latest_package_version:?}"
     mkdir -p \
@@ -78,14 +78,14 @@ fi
 # Generate xenia Emulation directory structure
 __emulation_path="/mnt/games/Emulation"
 mkdir -p \
-    "${USER_HOME:?}"/.local/share/xenia \
+    "${__emulation_path:?}"/storage/xenia \
     "${__emulation_path:?}"/roms/xbox360
 
 #ensure_symlink "${__emulation_path:?}/storage/rpcs3/home" "${USER_HOME:?}/.config/rpcs3/dev_hdd0/home"
 
 # Generate a default config if missing
-if [ ! -f "${USER_HOME:?}/.local/share/xenia/xenia-canary.config.toml" ]; then
-    cat << EOF > "${USER_HOME:?}/.local/share/xenia/xenia-canary.config.toml"
+if [ ! -f "${__emulation_path:?}/storage/xenia/xenia-canary.config.toml" ]; then
+    cat << EOF > "${__emulation_path:?}/storage/xenia/xenia-canary.config.toml"
 [Display]
 fullscreen = true
 
@@ -94,8 +94,8 @@ gpu = "vulkan"
 EOF
 fi
 
-if [ ! -f "${USER_HOME:?}/.local/share/xenia/portable.txt" ]; then
-    touch "${USER_HOME:?}/.local/share/xenia/portable.txt"
+if [ ! -f "${__emulation_path:?}/storage/xenia/portable.txt" ]; then
+    touch "${__emulation_path:?}/storage/xenia/portable.txt"
 fi
 
 # ensure_esde_alternative_emulator_configured "xbox360" "xenia (Proton)"
