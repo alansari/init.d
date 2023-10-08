@@ -43,9 +43,7 @@ if ([ ! -f "${package_executable:?}" ] || [ ${__installed_version} != ${__latest
     __install_dir="${__emulation_path:?}/storage/xenia"
     # Download zip & extract
     print_step_header "Downloading ${package_name:?} version ${__latest_package_version:?}"
-    mkdir -p \
-        "${__install_dir:?}" \
-        "${USER_HOME:?}/.local/bin/xenia" # just for ES-DE
+    mkdir -p "${__install_dir:?}" 
     wget -O "${__install_dir:?}/${package_name,,}.zip" \
         --quiet -o /dev/null \
         --no-verbose --show-progress \
@@ -55,8 +53,6 @@ if ([ ! -f "${package_executable:?}" ] || [ ${__installed_version} != ${__latest
     pushd "${__install_dir:?}" &> /dev/null || { echo "Error: Failed to push directory to ${__install_dir:?}"; exit 1; }
     unzip -x "${__install_dir:?}/${package_name,,}.zip"
     chmod +x "${__install_dir:?}/xenia_canary.exe"
-    # create link so ES-DE auto finds executable
-    ln -snf "${__install_dir:?}/xenia_canary.exe" "${USER_HOME:?}/.local/bin/xenia/xenia_canary.exe"
     # pull latest patches for camptability
     #if ([ -d "${__install_dir:?}/patches" ]); then
     #    rm -rf "${__install_dir:?}/patches" 
@@ -81,7 +77,7 @@ mkdir -p \
     "${__emulation_path:?}"/storage/xenia \
     "${__emulation_path:?}"/roms/xbox360
 
-#ensure_symlink "${__emulation_path:?}/storage/rpcs3/home" "${USER_HOME:?}/.config/rpcs3/dev_hdd0/home"
+ensure_symlink "${__emulation_path:?}/storage/xenia" "${USER_HOME:?}/.local/bin/xenia"
 
 # Generate a default config if missing
 if [ ! -f "${__emulation_path:?}/storage/xenia/xenia-canary.config.toml" ]; then
