@@ -22,6 +22,7 @@ exec_script_as_default_user
 
 
 # Config
+__emulation_path="/mnt/games/Emulation"
 package_name="Xenia-Canary"
 package_description="Xbox360 Emulator"
 package_icon_url="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/420c841038c492fed4d19999a813009d/32/32x32.png"
@@ -34,7 +35,6 @@ print_package_name
 __registry_package_json=$(wget -O - -o /dev/null https://api.github.com/repos/xenia-canary/xenia-canary/releases/latest)
 __latest_package_version=$(echo ${__registry_package_json:?} | jq -r '.tag_name')
 __latest_package_url=$(echo ${__registry_package_json:?} | jq -r '.assets[]' | jq -r '.browser_download_url')
-__emulation_path="/mnt/games/Emulation"
 print_step_header "Latest ${package_name:?} version: ${__latest_package_version:?}"
 __installed_version=$(catalog -g ${package_name,,})
 
