@@ -19,7 +19,7 @@ if [ -d "/home/default/.shui" ]; then
     git pull origin dev-SHUI
 else
     # If it doesn't exist, clone the repository
-    git clone https://github.com/alansari/frontend.git -b dev-SHUI /home/default/.shui
+    git clone https://github.com/Steam-Headless/frontend.git -b dev-SHUI /home/default/.shui
     cd /home/default/.shui
 fi
 
